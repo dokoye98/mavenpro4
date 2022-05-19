@@ -2,6 +2,7 @@ package jdbcPACK;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Statement;
 
 import com.mysql.cj.protocol.Resultset;
@@ -36,8 +37,8 @@ public Bird getBirdById(int id) {
 		String query = "SELECT * FROM Bird where id =?";
 		PreparedStatement prestmt =conn.prepareStatement(query);
 		prestmt.setInt(1, id);
+		ResultSet results =prestmt.executeQuery();
 		return modelBird(results);
-		Resultset results =prestmt.executeQuery();
 	}catch(Exception e) {
 		e.printStackTrace();
 	return null;
@@ -73,7 +74,7 @@ public Bird updateBird(int id , Bird bird) {
 	}
 }
 
-public Bird modelBird(Resultset result) {
+public Bird modelBird(ResultSet result) {
 	try {
 		int id = result.getInt("id");
 		String featherColour = result.getString("feather_colour");
