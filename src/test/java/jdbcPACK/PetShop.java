@@ -36,11 +36,43 @@ public Bird getBirdById(int id) {
 		String query = "SELECT * FROM Bird where id =?";
 		PreparedStatement prestmt =conn.prepareStatement(query);
 		prestmt.setInt(1, id);
+		return modelBird(results);
 		Resultset results =prestmt.executeQuery();
 	}catch(Exception e) {
 		e.printStackTrace();
+	return null;
+	}
+	
+}
+
+
+public boolean deleteBird(int id) {
+	try {
+		String query = "DELETE FROM Bird WHERE id =?;";
+		PreparedStatement prestmt =conn.prepareStatement(query);
+		prestmt.setInt(1, id);
+		prestmt.executeUpdate();
+		return true;
+	}catch(Exception e) {
+		return false;
 	}
 }
+public Bird updateBird(int id , Bird bird) {
+	try {
+		String query ="UPDATE Bird set feather_colour =?, winspan =?, name =? WHERE id =?; ";
+				PreparedStatement prestmt =conn.prepareStatement(query);
+				prestmt.setString(1,bird.getFeatherColour());
+		prestmt.setInt(2, bird.getWingspan());
+		prestmt.setString(3,bird.getName());
+		prestmt.executeUpdate();
+		
+	return getBirdById(id);
+	}catch (Exception e) {
+		e.printStackTrace();
+		return null;
+	}
+}
+
 public Bird modelBird(Resultset result) {
 	try {
 		int id = result.getInt("id");
