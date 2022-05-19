@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 
+import com.mysql.cj.protocol.Resultset;
+
 public class PetShop {
 
 	
@@ -29,4 +31,30 @@ public class PetShop {
 		return false;
 		
 	}
+public Bird getBirdById(int id) {
+	try {
+		String query = "SELECT * FROM Bird where id =?";
+		PreparedStatement prestmt =conn.prepareStatement(query);
+		prestmt.setInt(1, id);
+		Resultset results =prestmt.executeQuery();
+	}catch(Exception e) {
+		e.printStackTrace();
+	}
+}
+public Bird modelBird(Resultset result) {
+	try {
+		int id = result.getInt("id");
+		String featherColour = result.getString("feather_colour");
+		int wingspan =result.getInt("wingspan");
+		String name=result.getString("name");
+		
+		
+		// make bird object and return
+		Bird bird = new Bird(id, featherColour, wingspan, name);
+		return bird;
+	}catch(Exception e) {
+		e.printStackTrace();
+		return null;
+	}
+}
 }
