@@ -24,7 +24,7 @@ public class PetController {
 		return bird;
 	}
 	//delete bird
-	public boolean delBird(int id) {
+	public boolean deleteBird(int id) {
 		boolean deleted = petShop.deleteBird(id);
 		return deleted;
 	}
