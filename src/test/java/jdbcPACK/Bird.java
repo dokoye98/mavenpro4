@@ -18,6 +18,16 @@ public Bird(int id, String featherColour, int wingspan, String name) {
 	this.wingspan = wingspan;
 	this.name = name;
 }
+
+//method
+public String makeNoise() {
+	String noise = "cacaw! my name is "  + getName();
+return noise;	
+}
+
+
+
+
 public int getId() {
 	return id;
 }

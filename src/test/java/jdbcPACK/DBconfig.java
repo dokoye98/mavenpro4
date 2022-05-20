@@ -6,7 +6,7 @@ import java.sql.Statement;
 
 public class DBconfig {
 	final String JDBC_DRIVER ="com.mysql.cj.jdbc.Driver";
-	final String DB_URL="jdbc:mysql://localhost:3306/petshop?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+	final String DB_URL="jdbc:mysql://localhost:3306/testpetshop?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 	final String USER="root";
 	final String PASSWORD="root";
 	Connection conn;

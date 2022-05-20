@@ -16,7 +16,8 @@ public class PetShop {
 	Connection conn = db.connect();
 	
 	//Add bird to petshop 
-	public boolean addBird(Bird bird) {
+	//return bird added to database
+	public Bird addBird(Bird bird) {
 		try {
 			String query = "INSERT INTO Bird(feather_colour,wingspan,name) values(?,?,?)"; 
 			PreparedStatement prestmt =conn.prepareStatement(query);
@@ -24,14 +25,28 @@ public class PetShop {
 			prestmt.setInt(2, bird.getWingspan());
 			prestmt.setString(3,bird.getName());
 			prestmt.executeUpdate();//used to change data 
-			return true;
+			return readLatest();
 		}catch (Exception e) {
 			//exception = error in  the code 
 			// when there is an error it is caught 
 		}
-		return false;
+		return null;
 		
 	}
+	
+	//new method to see id of latest bird added 
+	public Bird readLatest() {
+		try {
+			String query = "SELECT * FROM Bird ORDER BY id DESC LIMIT 1;";
+			PreparedStatement prestmt =conn.prepareStatement(query);
+			ResultSet results =prestmt.executeQuery();
+			return modelBird(results);
+	}catch(Exception e) {
+		e.printStackTrace();
+		return null;
+	}}
+	
+	
 public Bird getBirdById(int id) {
 	try {
 		String query = "SELECT * FROM Bird where id =?";
@@ -74,8 +89,20 @@ public Bird updateBird(int id , Bird bird) {
 	}
 }
 
+public String birdNoiseById(int id) {
+	try {Bird bird = getBirdById(id);
+	return bird.makeNoise();
+		
+	}catch(Exception e) {
+		e.printStackTrace();
+	}
+	return null;
+}
+
 public Bird modelBird(ResultSet result) {
 	try {
+		
+		result.next();
 		int id = result.getInt("id");
 		String featherColour = result.getString("feather_colour");
 		int wingspan =result.getInt("wingspan");
